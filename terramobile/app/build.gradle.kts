@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    implementation (files("D:/2_Code/Terra_Scan_WorkSpace/Terra-Scan-Common/terra-common/build/libs/terra-common-0.0.1-SNAPSHOT.jar"))
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
