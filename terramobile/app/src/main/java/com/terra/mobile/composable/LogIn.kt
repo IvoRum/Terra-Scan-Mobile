@@ -52,8 +52,9 @@ val terraDarkBlue: Color = Color(2, 115, 115)
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun LogIn(viewModel: UserViewModel?, navController: NavHostController) {
-    var currentProgress by remember { mutableStateOf(0f) }
+fun LogIn(){
+    //(viewModel: UserViewModel?, navController: NavHostController) {
+    //var currentProgress by remember { mutableStateOf(0f) }
     var loading by remember { mutableStateOf(false) }
     var userName by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -63,7 +64,7 @@ fun LogIn(viewModel: UserViewModel?, navController: NavHostController) {
     val isTextFieldEmptyPassword by derivedStateOf {
         password.isBlank()
     }
-    val brush = Brush.sweepGradient(listOf(terraDarkBlue, terraDarkBlue))
+    //val brush = Brush.sweepGradient(listOf(terraDarkBlue, terraDarkBlue))
 
     TerramobileTheme {
         Box(
@@ -159,7 +160,8 @@ fun LogIn(viewModel: UserViewModel?, navController: NavHostController) {
 @Preview
 @Composable
 fun LoginPreview() {
-    val navController = rememberNavController()
-    LogIn(viewModel = null, navController = navController)
+    //val navController = rememberNavController()
+    //LogIn(viewModel = null, navController = navController)
+    LogIn()
 }
 
