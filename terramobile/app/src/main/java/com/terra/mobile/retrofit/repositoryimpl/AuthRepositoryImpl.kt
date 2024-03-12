@@ -1,20 +1,20 @@
 package com.terra.mobile.retrofit.repositoryimpl
 
-import android.util.Log
+import com.terra.mobile.model.AuthenticationRequest
+import com.terra.mobile.model.AuthenticationResponse
 import com.terra.mobile.retrofit.Api
-import com.terra.mobile.retrofit.repository.HeathRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
 import com.terra.mobile.retrofit.Result
+import com.terra.mobile.retrofit.repository.AuthRepository
 
-class HeathRepositoryImpl(private val api: Api) : HeathRepository {
-    override suspend fun getHealth(): Flow<Result<String>> {
+class AuthRepositoryImpl(private val api: Api): AuthRepository {
+    override suspend fun authenticate(authRequst: AuthenticationRequest): Flow<Result<AuthenticationResponse>> {
         return flow {
             val productsFromApi = try {
-                api.getProductsList()
-
+                api.getAuthList(authRequst)
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Result.Error(message = "Error loading products"))
@@ -28,10 +28,7 @@ class HeathRepositoryImpl(private val api: Api) : HeathRepository {
                 emit(Result.Error(message = "Error loading products"))
                 return@flow
             }
-            Log.w("productsFromApi", productsFromApi);
             emit(Result.Success(productsFromApi))
         }
-
     }
-
 }

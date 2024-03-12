@@ -21,6 +21,8 @@ import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.HealthViewModel
 import com.terra.mobile.view.model.UserViewModel
 import android.util.Log
+import com.terra.mobile.composable.Home
+import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
 
 
 class MainActivity : ComponentActivity() {
@@ -30,6 +32,15 @@ class MainActivity : ComponentActivity() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return HealthViewModel(HeathRepositoryImpl(RetrofitInstance.api))
+                        as T
+            }
+        }
+    })
+
+    private val userViewModel by viewModels<UserViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return UserViewModel(AuthRepositoryImpl(RetrofitInstance.api))
                         as T
             }
         }
@@ -51,8 +62,10 @@ class MainActivity : ComponentActivity() {
                     Log.w("Heath", productList);
                     NavHost(navController, startDestination = "login") {
                         composable("login") {
-                            //LogIn(viewModel, navController)
-                            LogIn()
+                            LogIn(userViewModel, navController)
+                        }
+                        composable("home"){
+                            Home(userViewModel,navController)
                         }
                     }
                 }

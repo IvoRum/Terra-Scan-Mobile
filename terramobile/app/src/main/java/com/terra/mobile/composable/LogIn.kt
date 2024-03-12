@@ -1,14 +1,12 @@
 package com.terra.mobile.composable
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,7 +21,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,9 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.terra.mobile.R
 import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.UserViewModel
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
@@ -47,14 +42,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 
+
 val terraWhite: Color = Color(242, 231, 220)
 val terraDarkBlue: Color = Color(2, 115, 115)
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun LogIn(){
-    //(viewModel: UserViewModel?, navController: NavHostController) {
-    //var currentProgress by remember { mutableStateOf(0f) }
+fun LogIn(viewModel: UserViewModel?, navController: NavHostController) {
+    var currentProgress by remember { mutableStateOf(0f) }
     var loading by remember { mutableStateOf(false) }
     var userName by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -112,13 +107,20 @@ fun LogIn(){
                     onClick = {
                         if (!isTextFieldEmpty && !isTextFieldEmptyPassword) {
                             loading = true
-                            /*
-                            logInAction(viewModel, userName, password, navController) { progress ->
-                                currentProgress = progress
+
+                            if (viewModel != null) {
+                                logInAction(
+                                    viewModel,
+                                    userName,
+                                    password,
+                                    navController
+                                ) { progress ->
+                                    currentProgress = progress
+                                }
                             }
                             loading = false
 
-                             */
+
                         }
                     },
                     modifier = Modifier.padding(10.dp),
@@ -130,19 +132,21 @@ fun LogIn(){
                 }
                 Button(
                     onClick = {
-                        /*
+
                         loading = true
-                        logInAction(
-                            viewModel,
-                            "deme@mail.com",
-                            "deme12345678",
-                            navController
-                        ) { progress ->
-                            currentProgress = progress
+                        if (viewModel != null) {
+                            logInAction(
+                                viewModel,
+                                "ivoAdmin@mail.com",
+                                "12345678",
+                                navController
+                            ) { progress ->
+                                currentProgress = progress
+                            }
                         }
                         loading = false
 
-                         */
+
                     },
                     modifier = Modifier.padding(10.dp), colors = ButtonDefaults.buttonColors(
                         Color.Transparent,
@@ -157,11 +161,22 @@ fun LogIn(){
     }
 }
 
+
+private fun logInAction(
+    viewModel: UserViewModel,
+    email: String,
+    password: String,
+    navController: NavHostController,
+    updateProgress: (Float) -> Unit
+) {
+    updateProgress(40F)
+    viewModel.logUser(email, password, navController)
+}
+
 @Preview
 @Composable
 fun LoginPreview() {
-    //val navController = rememberNavController()
-    //LogIn(viewModel = null, navController = navController)
-    LogIn()
+    val navController = rememberNavController()
+    LogIn(viewModel = null, navController = navController)
 }
 
