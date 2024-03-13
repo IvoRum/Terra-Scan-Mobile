@@ -56,11 +56,11 @@ fun LandingCoposable( navController: NavHostController) {
                 Button(
                     onClick = { navController.navigate("login") }, modifier = Modifier.padding(10.dp),
                     colors = ButtonDefaults.buttonColors(terraWhite),
-                ) { Text(text = "Log In")}
+                ) { Text(text = "Log In", color = Color.Black)}
                 Button(
                     onClick = { navController.navigate("register") }, modifier = Modifier.padding(10.dp),
                     colors = ButtonDefaults.buttonColors(terraWhite),
-                ) { Text(text = "Register")}
+                ) { Text(text = "Register", color = Color.Black)}
             }
         }
     }

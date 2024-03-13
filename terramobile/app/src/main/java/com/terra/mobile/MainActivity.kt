@@ -1,5 +1,7 @@
 package com.terra.mobile
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +23,22 @@ import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.HealthViewModel
 import com.terra.mobile.view.model.UserViewModel
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.terra.mobile.composable.HomeCoposable
 import com.terra.mobile.composable.LogInCoposable
 import com.terra.mobile.composable.RegisterCoposable
@@ -49,7 +67,9 @@ class MainActivity : ComponentActivity() {
     })
 
 
-
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         //val viewModel by viewModels<UserViewModel>()
         super.onCreate(savedInstanceState)
@@ -60,22 +80,58 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val productList = viewModel1.products.collectAsState().value
-                    Log.w("Heath", productList);
-                    NavHost(navController, startDestination = "landing") {
-                        composable("login") {
-                            LandingCoposable(navController)
-                        }
-                        composable("register") {
-                            RegisterCoposable(userViewModel, navController)
-                        }
-                        composable("login") {
-                            LogInCoposable(userViewModel, navController)
-                        }
-                        composable("home"){
-                            HomeCoposable(userViewModel,navController)
+                    Scaffold(topBar = {
+                        TopAppBar(
+                            modifier = Modifier.background(Color.Gray),
+                            title = {
+                                //if (userData.value.id != 0 && userData.value.id != 404) {
+                                    Row {
+                                        IconButton(onClick = { /* do something */ }) {
+                                            //DOTO ADD A BUTUN HERE??
+                                        }
+                                    }
+                                //}
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = { navController.navigateUp() }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.ArrowBack,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = { navController.navigate("profile") }) {
+                                    if (userViewModel.authToken !="" ) {
+                                        Row {
+                                            Icon(
+                                                Icons.Rounded.AccountCircle,
+                                                contentDescription = "Your Profile"
+                                            )
+                                        }
+                                    }
+                                }
+                            },
+                        )
+                    }) {
+                        val productList = viewModel1.products.collectAsState().value
+                        Log.w("Heath", productList);
+                        NavHost(navController, startDestination = "landing") {
+                            composable("landing") {
+                                LandingCoposable(navController)
+                            }
+                            composable("register") {
+                                RegisterCoposable(userViewModel, navController)
+                            }
+                            composable("login") {
+                                LogInCoposable(userViewModel, navController)
+                            }
+                            composable("home") {
+                                HomeCoposable(userViewModel, navController)
+                            }
                         }
                     }
+
                 }
             }
         }
