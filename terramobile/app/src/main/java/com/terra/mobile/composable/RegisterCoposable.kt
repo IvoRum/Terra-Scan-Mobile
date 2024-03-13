@@ -44,7 +44,7 @@ import com.terra.mobile.view.model.UserViewModel
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun Register(viewModel: UserViewModel?, navController: NavHostController) {
+fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostController) {
     var currentProgress by remember { mutableStateOf(0f) }
     var loading by remember { mutableStateOf(false) }
     var userName by rememberSaveable { mutableStateOf("") }
@@ -196,5 +196,5 @@ private fun RegisternAction(
 @Composable
 fun RegisterPreview() {
     val navController = rememberNavController()
-    Register(viewModel = null, navController = navController)
+    RegisterCoposable(viewModel = null, navController = navController)
 }

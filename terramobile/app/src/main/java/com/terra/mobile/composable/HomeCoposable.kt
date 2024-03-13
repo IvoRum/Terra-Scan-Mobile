@@ -9,7 +9,7 @@ import com.terra.mobile.view.model.UserViewModel
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun Home(viewModel: UserViewModel?, navController: NavHostController) {
+fun HomeCoposable(viewModel: UserViewModel?, navController: NavHostController) {
     TerramobileTheme {
         if (viewModel != null) {
             Text(text = "Wellcome to home your token is: ${viewModel.authToken}")

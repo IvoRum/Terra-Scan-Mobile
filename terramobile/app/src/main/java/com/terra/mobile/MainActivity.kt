@@ -14,14 +14,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.terra.mobile.composable.LogIn
+import com.terra.mobile.composable.LandingCoposable
 import com.terra.mobile.retrofit.RetrofitInstance
 import com.terra.mobile.retrofit.repositoryimpl.HeathRepositoryImpl
 import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.HealthViewModel
 import com.terra.mobile.view.model.UserViewModel
 import android.util.Log
-import com.terra.mobile.composable.Home
+import com.terra.mobile.composable.HomeCoposable
+import com.terra.mobile.composable.LogInCoposable
+import com.terra.mobile.composable.RegisterCoposable
 import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
 
 
@@ -60,12 +62,18 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val productList = viewModel1.products.collectAsState().value
                     Log.w("Heath", productList);
-                    NavHost(navController, startDestination = "login") {
+                    NavHost(navController, startDestination = "landing") {
                         composable("login") {
-                            LogIn(userViewModel, navController)
+                            LandingCoposable(navController)
+                        }
+                        composable("register") {
+                            RegisterCoposable(userViewModel, navController)
+                        }
+                        composable("login") {
+                            LogInCoposable(userViewModel, navController)
                         }
                         composable("home"){
-                            Home(userViewModel,navController)
+                            HomeCoposable(userViewModel,navController)
                         }
                     }
                 }
