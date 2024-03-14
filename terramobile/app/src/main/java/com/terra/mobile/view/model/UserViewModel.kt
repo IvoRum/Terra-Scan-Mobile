@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.AuthenticationResponse
+import com.terra.mobile.model.RegistrationRequest
 import com.terra.mobile.retrofit.Result
 import com.terra.mobile.retrofit.repository.AuthRepository
 import kotlinx.coroutines.async
@@ -29,6 +30,28 @@ class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
         viewModelScope.launch {
             AuthenticationResponse("")
             authRepo.authenticate(AuthenticationRequest(email, password))
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            _showErrorToastChannel.send(true)
+                        }
+
+                        is Result.Success -> {
+                            result.data?.let { products ->
+                                _authToken.update { products }
+                            }
+                        }
+                    }
+                }
+            val navstring = "home";
+            navController.navigate(navstring)
+        }
+    }
+
+    fun register(email: String, password: String,firsName: String,lastName: String,navController: NavHostController) {
+        viewModelScope.launch {
+            AuthenticationResponse("")
+            authRepo.register(RegistrationRequest(email,password,firsName,lastName))
                 .collectLatest { result ->
                     when (result) {
                         is Result.Error -> {

@@ -61,17 +61,14 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
 
     TerramobileTheme {
         TerramobileTheme {
-            Box(
-                modifier = with(Modifier) {
-                    fillMaxHeight()
-                        .paint(
-                            painterResource(id = R.drawable.globe_3),
-                            contentScale = ContentScale.FillHeight,
-                            colorFilter = ColorFilter.tint(Color.Gray, blendMode = BlendMode.Darken)
-                        )
+            Box(modifier = with(Modifier) {
+                fillMaxHeight().paint(
+                    painterResource(id = R.drawable.globe_3),
+                    contentScale = ContentScale.FillHeight,
+                    colorFilter = ColorFilter.tint(Color.Gray, blendMode = BlendMode.Darken)
+                )
 
-                })
-            {
+            }) {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -85,24 +82,18 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                         fontFamily = FontFamily(Font(R.font.bowlby_one)),
                         color = terraWhite
                     )
-                    TextField(
-                        value = userName,
+                    TextField(value = userName,
                         modifier = Modifier.background(terraWhite),
                         onValueChange = { userName = it },
-                        label = { Text("Email") }
-                    )
-                    TextField(
-                        value = firstName,
+                        label = { Text("Email") })
+                    TextField(value = firstName,
                         modifier = Modifier.background(terraWhite),
                         onValueChange = { firstName = it },
-                        label = { Text("First name") }
-                    )
-                    TextField(
-                        value = lastName,
+                        label = { Text("First name") })
+                    TextField(value = lastName,
                         modifier = Modifier.background(terraWhite),
                         onValueChange = { lastName = it },
-                        label = { Text("Last name") }
-                    )
+                        label = { Text("Last name") })
                     TextField(
                         value = password,
                         modifier = Modifier.background(terraWhite),
@@ -132,6 +123,8 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                                         viewModel,
                                         userName,
                                         password,
+                                        firstName,
+                                        lastName,
                                         navController
                                     ) { progress ->
                                         currentProgress = progress
@@ -144,8 +137,7 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                         },
                         modifier = Modifier.padding(10.dp),
                         colors = ButtonDefaults.buttonColors(terraWhite),
-                    )
-                    {
+                    ) {
                         Text(text = "Log in", color = Color.Black)
 
                     }
@@ -156,8 +148,10 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                             if (viewModel != null) {
                                 RegisternAction(
                                     viewModel,
-                                    "ivoAdmin@mail.com",
+                                    "ivoNewUser@mail.com",
                                     "12345678",
+                                    "Ivo",
+                                    "Rum",
                                     navController
                                 ) { progress ->
                                     currentProgress = progress
@@ -166,13 +160,13 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                             loading = false
 
 
-                        },
-                        modifier = Modifier.padding(10.dp), colors = ButtonDefaults.buttonColors(
+                        }, modifier = Modifier.padding(10.dp), colors = ButtonDefaults.buttonColors(
                             Color.Transparent,
-                            Color.Transparent, Color.Transparent, Color.Transparent
+                            Color.Transparent,
+                            Color.Transparent,
+                            Color.Transparent
                         )
-                    )
-                    {
+                    ) {
                         Text(text = "Log in")
                     }
                 }
@@ -185,11 +179,13 @@ private fun RegisternAction(
     viewModel: UserViewModel,
     email: String,
     password: String,
+    firsName: String,
+    lastName: String,
     navController: NavHostController,
     updateProgress: (Float) -> Unit
 ) {
     updateProgress(40F)
-    viewModel.logUser(email, password, navController)
+    viewModel.register(email, password, firsName, lastName, navController)
 }
 
 @Preview
