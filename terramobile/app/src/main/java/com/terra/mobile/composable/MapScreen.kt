@@ -71,7 +71,8 @@ fun MapScreen(
             onMapLongClick = {
                 //TODO Think of what to a long click will do
                 viewModel.onEvent(MapEvent.OnMapLongClick(it))
-            }
+            },
+            cameraPositionState = cameraPositionState
         ) {
 
             val polyline1= listOf(
@@ -90,7 +91,7 @@ fun MapScreen(
             //googleMap.setOnPolylineClickListener(this)
            // googleMap.setOnPolygonClickListener(this)
 
-            //Polygon(points = polyline1)
+            Polygon(points = polyline1)
             /*
             viewModel.state.parkingSpots.forEach { spot ->
                 Marker(

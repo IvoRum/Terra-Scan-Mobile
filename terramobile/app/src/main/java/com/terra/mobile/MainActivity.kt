@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     })
-
+/*
     private val mapViewModel by viewModels<MapsViewModel>(factoryProducer = {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -72,6 +72,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     })
+
+ */
 
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -134,7 +136,7 @@ class MainActivity : ComponentActivity() {
                                 LogInCoposable(userViewModel, navController)
                             }
                             composable("home") {
-                                HomeCoposable(userViewModel,mapViewModel, navController)
+                                HomeCoposable(userViewModel, navController)
                             }
                         }
                     }

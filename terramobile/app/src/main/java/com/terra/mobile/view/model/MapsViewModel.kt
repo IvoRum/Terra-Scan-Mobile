@@ -28,7 +28,8 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MapsViewModel @Inject constructor(private val soilRepository: SoilRepositoryImpl) : ViewModel() {
+class MapsViewModel @Inject constructor() :
+    ViewModel() {
 
     private val _soil = MutableStateFlow<SoilResponse>(SoilResponse(emptyList()))
     val soil = _soil.asStateFlow().value.multipolygon
