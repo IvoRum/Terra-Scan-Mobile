@@ -25,9 +25,7 @@ import com.terra.mobile.view.model.UserViewModel
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.AccountCircle
@@ -37,12 +35,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.terra.mobile.composable.HomeCoposable
 import com.terra.mobile.composable.LogInCoposable
 import com.terra.mobile.composable.RegisterCoposable
 import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
+import com.terra.mobile.retrofit.repositoryimpl.SoilRepositoryImpl
+import com.terra.mobile.view.model.MapsViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -61,6 +59,15 @@ class MainActivity : ComponentActivity() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return UserViewModel(AuthRepositoryImpl(RetrofitInstance.api))
+                        as T
+            }
+        }
+    })
+
+    private val mapViewModel by viewModels<MapsViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return MapsViewModel(SoilRepositoryImpl(RetrofitInstance.api))
                         as T
             }
         }
@@ -127,7 +134,7 @@ class MainActivity : ComponentActivity() {
                                 LogInCoposable(userViewModel, navController)
                             }
                             composable("home") {
-                                HomeCoposable(userViewModel, navController)
+                                HomeCoposable(userViewModel,mapViewModel, navController)
                             }
                         }
                     }

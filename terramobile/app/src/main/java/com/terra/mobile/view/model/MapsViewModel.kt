@@ -42,6 +42,7 @@ class MapsViewModel @Inject constructor(private val soilRepository: SoilReposito
 
     init {
         //Set up test soil
+        /*
         viewModelScope.launch {
             AuthenticationResponse("")
             soilRepository.getTestSoil()
@@ -58,7 +59,11 @@ class MapsViewModel @Inject constructor(private val soilRepository: SoilReposito
                         }
                     }
                 }
+
+
         }
+        */
+
         viewModelScope.launch {
             /*
             repository.getParkingSpots().collectLatest { spots ->
