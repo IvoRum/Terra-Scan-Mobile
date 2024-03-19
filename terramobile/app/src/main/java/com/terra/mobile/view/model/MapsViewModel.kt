@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MapsViewModel @Inject constructor(): ViewModel() {
+class MapsViewModel @Inject constructor() : ViewModel() {
 
 
     var state by mutableStateOf(MapState())
@@ -36,17 +36,18 @@ class MapsViewModel @Inject constructor(): ViewModel() {
 
 
     fun onEvent(event: MapEvent) {
-        when(event) {
+        when (event) {
             is MapEvent.ToggleFalloutMap -> {
                 state = state.copy(
                     properties = state.properties.copy(
-                        mapStyleOptions = if(state.isFalloutMap) {
+                        mapStyleOptions = if (state.isFalloutMap) {
                             null
                         } else MapStyleOptions(MapStyle.json),
                     ),
                     isFalloutMap = !state.isFalloutMap
                 )
             }
+
             is MapEvent.OnMapLongClick -> {
                 viewModelScope.launch {
                     /*
