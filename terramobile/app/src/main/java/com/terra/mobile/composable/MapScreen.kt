@@ -2,7 +2,6 @@ package com.terra.mobile.composable
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -16,22 +15,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.terra.mobile.map.MapEvent
-import com.terra.mobile.retrofit.RetrofitInstance
-import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
 import com.terra.mobile.view.model.MapsViewModel
-import com.terra.mobile.view.model.UserViewModel
-
 
 
 @Composable
@@ -60,7 +51,8 @@ fun MapScreen(
             }
         }
     ) {
-        val singapore = LatLng(-23.684, 133.903)
+        //val singapore = LatLng(-23.684, 133.903)
+        val singapore = LatLng(-43.00, 25.00)
         val cameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(singapore, 4f)
         }
@@ -92,6 +84,10 @@ fun MapScreen(
            // googleMap.setOnPolygonClickListener(this)
 
             Polygon(points = polyline1)
+            var poligons=viewModel.state._soil.multipolygon
+            var bulgariaSoils= ArrayList<LatLng>()
+            poligons.forEach {point-> bulgariaSoils.add(LatLng(point.lat,point.lon)) }
+            Polygon(points = bulgariaSoils )
             /*
             viewModel.state.parkingSpots.forEach { spot ->
                 Marker(

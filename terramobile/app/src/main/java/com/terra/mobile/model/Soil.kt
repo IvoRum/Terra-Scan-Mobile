@@ -2,8 +2,8 @@ package com.terra.mobile.model
 
 
 data class SoilPointDTO(
-    val lon: Float,
-    val lat: Float
+    val lon: Double,
+    val lat: Double
 )
 
 data class SoilResponse(val multipolygon: List<SoilPointDTO>)

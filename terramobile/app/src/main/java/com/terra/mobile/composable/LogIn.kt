@@ -1,7 +1,6 @@
 package com.terra.mobile.composable
 
 import android.annotation.SuppressLint
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,13 +41,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.terra.mobile.retrofit.Api
-import com.terra.mobile.retrofit.RetrofitInstance
-import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
-import com.terra.mobile.retrofit.repositoryimpl.HeathRepositoryImpl
-import com.terra.mobile.view.model.HealthViewModel
 
 
 val terraWhite: Color = Color(242, 231, 220)

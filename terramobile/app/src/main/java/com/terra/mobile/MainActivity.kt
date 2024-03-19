@@ -17,7 +17,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.terra.mobile.composable.LandingCoposable
-import com.terra.mobile.retrofit.RetrofitInstance
 import com.terra.mobile.retrofit.repositoryimpl.HeathRepositoryImpl
 import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.HealthViewModel
@@ -35,11 +34,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terra.mobile.composable.HomeCoposable
 import com.terra.mobile.composable.LogInCoposable
 import com.terra.mobile.composable.RegisterCoposable
+import com.terra.mobile.retrofit.RetrofitInstance
+import com.terra.mobile.retrofit.repository.NetworkSoilRepository
+import com.terra.mobile.retrofit.repository.SoilRepository
 import com.terra.mobile.retrofit.repositoryimpl.AuthRepositoryImpl
-import com.terra.mobile.retrofit.repositoryimpl.SoilRepositoryImpl
 import com.terra.mobile.view.model.MapsViewModel
 
 
@@ -63,24 +65,20 @@ class MainActivity : ComponentActivity() {
             }
         }
     })
-/*
+
     private val mapViewModel by viewModels<MapsViewModel>(factoryProducer = {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MapsViewModel(SoilRepositoryImpl(RetrofitInstance.api))
+                return MapsViewModel(NetworkSoilRepository(RetrofitInstance.api))
                         as T
             }
         }
     })
 
- */
-
-
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        //val viewModel by viewModels<UserViewModel>()
         super.onCreate(savedInstanceState)
         setContent {
             TerramobileTheme {
@@ -127,6 +125,8 @@ class MainActivity : ComponentActivity() {
                         Log.w("Heath", productList);
                         NavHost(navController, startDestination = "landing") {
                             composable("landing") {
+                                mapViewModel.getBgSoil()
+
                                 LandingCoposable(navController)
                             }
                             composable("register") {
@@ -136,7 +136,8 @@ class MainActivity : ComponentActivity() {
                                 LogInCoposable(userViewModel, navController)
                             }
                             composable("home") {
-                                HomeCoposable(userViewModel, navController)
+                                Log.w("SOIL",mapViewModel.state._soil.multipolygon.toString())
+                                HomeCoposable(userViewModel,mapViewModel, navController)
                             }
                         }
                     }

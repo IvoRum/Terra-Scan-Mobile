@@ -17,6 +17,7 @@ import com.terra.mobile.view.model.UserViewModel
 @Composable
 fun HomeCoposable(
     viewModel: UserViewModel?,
+    mapViewModel: MapsViewModel,
     navController: NavHostController
 ) {
     TerramobileTheme {
@@ -27,7 +28,8 @@ fun HomeCoposable(
                     modifier = Modifier.fillMaxSize(),
                     //color = MaterialTheme.colors.background
                 ) {
-                    MapScreen()
+                    mapViewModel.getBgSoil()
+                    MapScreen(mapViewModel)
                 }
 
         }
