@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class MapsViewModel constructor(private val soilRepository: SoilRepository) : ViewModel() {
 
-    var state by mutableStateOf(MapState())
+    var state by mutableStateOf(MapState(_soil = emptyList()))
 
 
     init {

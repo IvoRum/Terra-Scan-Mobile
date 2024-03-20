@@ -99,7 +99,7 @@ class MainActivity : ComponentActivity() {
                                 LogInCoposable(userViewModel, navController)
                             }
                             composable("home") {
-                                Log.w("SOIL", mapViewModel.state._soil.multipolygon.toString())
+                                Log.w("SOIL", mapViewModel.state._soil.toString())
                                 HomeCoposable(userViewModel, mapViewModel, navController)
                             }
                         }

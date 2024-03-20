@@ -84,7 +84,7 @@ fun MapScreen(
            // googleMap.setOnPolygonClickListener(this)
 
             Polygon(points = polyline1)
-            var poligons=viewModel.state._soil.multipolygon
+            var poligons=viewModel.state._soil
             var bulgariaSoils= ArrayList<LatLng>()
            //poligons.forEach {point-> bulgariaSoils.add(LatLng(point.lat,point.lon)) }
             //Polygon(points = bulgariaSoils )

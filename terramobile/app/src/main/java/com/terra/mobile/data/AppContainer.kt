@@ -24,6 +24,7 @@ import com.terra.mobile.retrofit.repository.SoilRepository
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 interface AppContainer {
@@ -32,24 +33,12 @@ interface AppContainer {
 
 class DefaultAppContainer : AppContainer {
     private val baseUrl = "http://192.168.0.105:8081/"
-    val contentType = "application/json".toMediaType()
-
-    val json = Json {
-        ignoreUnknownKeys = true // Ignore unknown keys during deserialization
-        isLenient = true // Accept malformed JSON
-    }
-
-    val converterFactory = json.asConverterFactory(contentType)
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        //.addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+        // .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl)
-        .addConverterFactory(converterFactory)
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
-
-    private val gson = GsonBuilder()
-        .setLenient()
-        .create()
 
     private val retrofitService: Api by lazy {
         retrofit.create(Api::class.java)
