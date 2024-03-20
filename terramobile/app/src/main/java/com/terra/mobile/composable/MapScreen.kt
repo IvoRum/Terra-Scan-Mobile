@@ -86,8 +86,8 @@ fun MapScreen(
             Polygon(points = polyline1)
             var poligons=viewModel.state._soil
             var bulgariaSoils= ArrayList<LatLng>()
-           //poligons.forEach {point-> bulgariaSoils.add(LatLng(point.lat,point.lon)) }
-            //Polygon(points = bulgariaSoils )
+            poligons.forEach {point-> bulgariaSoils.add(LatLng(point.lat,point.lon)) }
+            Polygon(points = bulgariaSoils )
             /*
             viewModel.state.parkingSpots.forEach { spot ->
                 Marker(
