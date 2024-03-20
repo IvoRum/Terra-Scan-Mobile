@@ -15,20 +15,18 @@
  */
 package com.terra.mobile.data
 
-import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.terra.mobile.retrofit.Api
 import com.terra.mobile.retrofit.repository.NetworkSoilRepository
+import com.terra.mobile.retrofit.repository.NetworkUserRepository
 import com.terra.mobile.retrofit.repository.SoilRepository
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import okhttp3.MediaType.Companion.toMediaType
+import com.terra.mobile.retrofit.repository.UserRepository
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 interface AppContainer {
     val soilRepository: SoilRepository
+    val userRepository: UserRepository
 }
 
 class DefaultAppContainer : AppContainer {
@@ -47,6 +45,10 @@ class DefaultAppContainer : AppContainer {
     override val soilRepository: SoilRepository by lazy {
         NetworkSoilRepository(retrofitService)
     }
+    override val userRepository: UserRepository by lazy {
+        NetworkUserRepository(retrofitService)
+    }
+
 }
 
 

@@ -32,6 +32,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terra.mobile.composable.HomeCoposable
 import com.terra.mobile.composable.LogInCoposable
 import com.terra.mobile.composable.RegisterCoposable
+import com.terra.mobile.data.UserState
 import com.terra.mobile.view.model.MapsViewModel
 
 
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 val mapViewModel: MapsViewModel =
                     viewModel(factory = MapsViewModel.Factory)
                 val userViewModel: UserViewModel =
-                    viewModel()
+                    viewModel(factory = UserViewModel.Factory)
 
                 val navController = rememberNavController()
                 Surface(
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
                             },
                             actions = {
                                 IconButton(onClick = { navController.navigate("profile") }) {
-                                    if (userViewModel.authToken != "") {
+                                    if (userViewModel.userUiState is UserState.Success) {
                                         Row {
                                             Icon(
                                                 Icons.Rounded.AccountCircle,

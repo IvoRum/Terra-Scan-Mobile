@@ -32,7 +32,7 @@ import com.terra.mobile.view.model.MapsViewModel
 fun MapScreen(
     viewModel: MapsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-    val scaffoldState =  remember { SnackbarHostState() }
+    val scaffoldState = remember { SnackbarHostState() }
     val uiSettings = remember {
         MapUiSettings(zoomControlsEnabled = false)
     }
@@ -51,13 +51,13 @@ fun MapScreen(
             }
         }
     ) {
-        //val singapore = LatLng(-23.684, 133.903)
-        val singapore = LatLng(-43.00, 25.00)
+        //val singapore = LatLng(-23.684, 133.903)//Avstraliq
+        val singapore = LatLng(42.7339, 25.4858)
         val cameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(singapore, 4f)
         }
         GoogleMap(
-            modifier =Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             properties = viewModel.state.properties,
             uiSettings = uiSettings,
             onMapLongClick = {
@@ -67,27 +67,25 @@ fun MapScreen(
             cameraPositionState = cameraPositionState
         ) {
 
-            val polyline1= listOf(
-                    LatLng(-35.016, 143.321),
-                    LatLng(-34.747, 145.592),
-                    LatLng(-34.364, 147.891),
-                    LatLng(-33.501, 150.217),
-                    LatLng(-32.306, 149.248),
-                    LatLng(-32.491, 147.309))
-
-            // Position the map's camera near Alice Springs in the center of Australia,
-            // and set the zoom factor so most of Australia shows on the screen.
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-23.684, 133.903), 4f))
-
+            val polyline1 = listOf(
+                LatLng(-35.016, 143.321),
+                LatLng(-34.747, 145.592),
+                LatLng(-34.364, 147.891),
+                LatLng(-33.501, 150.217),
+                LatLng(-32.306, 149.248),
+                LatLng(-32.491, 147.309)
+            )
 
             //googleMap.setOnPolylineClickListener(this)
-           // googleMap.setOnPolygonClickListener(this)
-
-            Polygon(points = polyline1)
-            var poligons=viewModel.state._soil
-            var bulgariaSoils= ArrayList<LatLng>()
-            poligons.forEach {point-> bulgariaSoils.add(LatLng(point.lat,point.lon)) }
-            Polygon(points = bulgariaSoils )
+            // googleMap.setOnPolygonClickListener(this)
+            if (!cameraPositionState.isMoving) {
+                cameraPositionState.position.target
+                Polygon(points = polyline1)
+                var poligons = viewModel.state._soil
+                var bulgariaSoils = ArrayList<LatLng>()
+                poligons.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
+                Polygon(points = bulgariaSoils)
+            }
             /*
             viewModel.state.parkingSpots.forEach { spot ->
                 Marker(

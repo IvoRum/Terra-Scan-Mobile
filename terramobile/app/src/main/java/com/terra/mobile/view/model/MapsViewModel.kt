@@ -25,15 +25,6 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
 
     init {
         getBgSoil()
-        viewModelScope.launch {
-            /*
-            repository.getParkingSpots().collectLatest { spots ->
-                state = state.copy(
-                    parkingSpots = spots
-                )
-            }
-             */
-        }
     }
 
 
@@ -68,7 +59,7 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
             initializer {
                 val application = (this[APPLICATION_KEY] as AppActivity)
                 val soilRope = application.container.soilRepository
-                MapsViewModel( soilRope)
+                MapsViewModel(soilRope)
             }
         }
     }
