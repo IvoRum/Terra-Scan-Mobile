@@ -1,24 +1,18 @@
 package com.terra.mobile.view.model
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.AuthenticationResponse
-import com.terra.mobile.model.RegistrationRequest
-import com.terra.mobile.retrofit.Result
-import com.terra.mobile.retrofit.repository.AuthRepository
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
+class UserViewModel(
+//    private val authRepo: AuthRepository
+) : ViewModel() {
 
     private val _authToken = MutableStateFlow<AuthenticationResponse>(AuthenticationResponse(""))
     val authToken = _authToken.asStateFlow().value.accessToken
@@ -28,6 +22,7 @@ class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
 
     fun logUser(email: String, password: String,navController: NavHostController) {
         viewModelScope.launch {
+            /*
             AuthenticationResponse("")
             authRepo.authenticate(AuthenticationRequest(email, password))
                 .collectLatest { result ->
@@ -43,6 +38,8 @@ class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
                         }
                     }
                 }
+
+             */
             val navstring = "home";
             navController.navigate(navstring)
         }
@@ -50,6 +47,7 @@ class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
 
     fun register(email: String, password: String,firsName: String,lastName: String,navController: NavHostController) {
         viewModelScope.launch {
+            /*
             AuthenticationResponse("")
             authRepo.register(RegistrationRequest(email,password,firsName,lastName))
                 .collectLatest { result ->
@@ -65,6 +63,8 @@ class UserViewModel(private val authRepo: AuthRepository) : ViewModel() {
                         }
                     }
                 }
+
+             */
             val navstring = "home";
             navController.navigate(navstring)
         }

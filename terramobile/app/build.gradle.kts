@@ -79,44 +79,29 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
     // Coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    debugImplementation("androidx.compose.ui:ui-tooling")
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     // Compose dependencies
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
     implementation ("androidx.compose.material:material-icons-extended")
     implementation ("com.google.maps.android:maps-compose:1.0.0")
 
     // Google Maps
-    implementation ("com.google.android.gms:play-services-maps:18.0.2")
-
-    //Dagger - Hilt
-    implementation ("com.google.dagger:hilt-android:2.40.5")
-    //kapt ("com.google.dagger:hilt-android-compiler:2.40.5")
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    //kapt ("androidx.hilt:hilt-compiler:1.0.0")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-    // Room
-    implementation ("androidx.room:room-runtime:2.4.1")
-    //kapt ("androidx.room:room-compiler:2.4.1")
-
-    // Kotlin Extensions and Coroutines support for Room
-    implementation ("androidx.room:room-ktx:2.4.1")
-
-    implementation ("io.reactivex.rxjava3:rxjava:3.0.13")
-    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
 }

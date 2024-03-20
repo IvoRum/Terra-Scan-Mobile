@@ -67,8 +67,8 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as AppActivity)
-                val marsPhotosRepository = application.container.marsPhotosRepository
-                MapsViewModel( marsPhotosRepository)
+                val soilRope = application.container.soilRepository
+                MapsViewModel( soilRope)
             }
         }
     }

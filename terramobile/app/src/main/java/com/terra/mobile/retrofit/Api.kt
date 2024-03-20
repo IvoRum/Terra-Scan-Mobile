@@ -4,7 +4,6 @@ import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.AuthenticationResponse
 import com.terra.mobile.model.RegistrationRequest
 import com.terra.mobile.model.SoilResponse
-import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
