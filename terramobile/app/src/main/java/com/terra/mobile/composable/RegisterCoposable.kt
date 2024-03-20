@@ -138,7 +138,7 @@ fun RegisterCoposable(viewModel: UserViewModel?, navController: NavHostControlle
                         modifier = Modifier.padding(10.dp),
                         colors = ButtonDefaults.buttonColors(terraWhite),
                     ) {
-                        Text(text = "Log in", color = Color.Black)
+                        Text(text = "Register", color = Color.Black)
 
                     }
                     Button(

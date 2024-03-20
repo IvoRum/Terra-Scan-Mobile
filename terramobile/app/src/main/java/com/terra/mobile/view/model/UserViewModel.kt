@@ -13,27 +13,33 @@ import androidx.navigation.NavHostController
 import com.terra.mobile.AppActivity
 import com.terra.mobile.data.UserState
 import com.terra.mobile.model.AuthenticationRequest
+import com.terra.mobile.model.RegistrationRequest
 import com.terra.mobile.retrofit.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
-    var userUiState:UserState by mutableStateOf(UserState.Loading)
+    var userUiState: UserState by mutableStateOf(UserState.Loading)
 
     fun logUser(email: String, password: String, navController: NavHostController) {
         viewModelScope.launch {
-            userUiState=UserState.Loading
-            userUiState=try {
-                UserState.Success(userRepository.authenticate(AuthenticationRequest(email, password)))
-            }  catch (e: IOException) {
+            userUiState = UserState.Loading
+            userUiState = try {
+                UserState.Success(
+                    userRepository.authenticate(
+                        AuthenticationRequest(
+                            email,
+                            password
+                        )
+                    )
+                )
+            } catch (e: IOException) {
                 UserState.Error
             } catch (e: HttpException) {
                 UserState.Error
             }
-
-            if (userUiState is UserState.Success)
-            {
+            if (userUiState is UserState.Success) {
                 val navstring = "home";
                 navController.navigate(navstring)
                 Log.w("USERTOKKEN", userUiState.toString())
@@ -49,26 +55,28 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
         navController: NavHostController
     ) {
         viewModelScope.launch {
-            /*
-            AuthenticationResponse("")
-            authRepo.register(RegistrationRequest(email,password,firsName,lastName))
-                .collectLatest { result ->
-                    when (result) {
-                        is Result.Error -> {
-                            _showErrorToastChannel.send(true)
-                        }
-
-                        is Result.Success -> {
-                            result.data?.let { products ->
-                                _authToken.update { products }
-                            }
-                        }
-                    }
-                }
-
-             */
-            val navstring = "home";
-            navController.navigate(navstring)
+            userUiState = UserState.Loading
+            userUiState = try {
+                UserState.Success(
+                    userRepository.register(
+                        RegistrationRequest(
+                            email,
+                            password,
+                            firsName,
+                            lastName
+                        )
+                    )
+                )
+            } catch (e: IOException) {
+                UserState.Error
+            } catch (e: HttpException) {
+                UserState.Error
+            }
+            if (userUiState is UserState.Success) {
+                val navstring = "home";
+                navController.navigate(navstring)
+                Log.w("USERTOKKEN", userUiState.toString())
+            }
         }
     }
 
