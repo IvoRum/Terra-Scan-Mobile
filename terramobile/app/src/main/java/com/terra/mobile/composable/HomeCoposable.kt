@@ -8,6 +8,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.terra.mobile.data.UserState
+import com.terra.mobile.data.UserState.Success
 import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.MapsViewModel
 import com.terra.mobile.view.model.UserViewModel
@@ -28,7 +30,10 @@ fun HomeCoposable(
                     modifier = Modifier.fillMaxSize(),
                     //color = MaterialTheme.colors.background
                 ) {
-                    mapViewModel.getBgSoil()
+                    if(viewModel.userUiState is Success) {
+                        //TODO testwhitout if contract statest that user must be login to be able to reach HomeCoposable
+                        mapViewModel.getBgSoil((viewModel.userUiState as Success).getTokken())
+                    }
                     MapScreen(mapViewModel)
                 }
 

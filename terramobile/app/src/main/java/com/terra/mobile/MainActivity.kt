@@ -90,7 +90,6 @@ class MainActivity : ComponentActivity() {
                     }) {
                         NavHost(navController, startDestination = "landing") {
                             composable("landing") {
-                                mapViewModel.getBgSoil()
                                 LandingCoposable(navController)
                             }
                             composable("register") {

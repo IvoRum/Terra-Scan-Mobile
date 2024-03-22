@@ -1,5 +1,6 @@
 package com.terra.mobile.view.model
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,12 +23,6 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
 
     var state by mutableStateOf(MapState(_soil = emptyList()))
 
-
-    init {
-        getBgSoil()
-    }
-
-
     fun onEvent(event: MapEvent) {
         when (event) {
             is MapEvent.ToggleFalloutMap -> {
@@ -45,9 +40,11 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
         }
     }
 
-    fun getBgSoil() {
+    fun getBgSoil(token:String) {
         viewModelScope.launch {
-            state._soil = soilRepository.getTestSoil()
+            var token="Bearer "+token
+            Log.w("Token fo soil",token)
+            state._soil = soilRepository.getTestSoil(token)
         }
     }
 
