@@ -14,6 +14,7 @@ import com.terra.mobile.AppActivity
 import com.terra.mobile.data.UserState
 import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.RegistrationRequest
+import com.terra.mobile.model.UserModel
 import com.terra.mobile.retrofit.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -21,6 +22,21 @@ import java.io.IOException
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     var userUiState: UserState by mutableStateOf(UserState.Loading)
+    var userData: UserModel by mutableStateOf(UserModel("", "", ""))
+
+    fun getUserData() {
+        viewModelScope.launch {
+            if (userUiState is UserState.Success) {
+                val foudUserData =
+                    userRepository.getUserData((userUiState as UserState.Success).getTokken())
+                if (foudUserData != null) {
+                    userData = foudUserData
+                } else {
+                    UserModel("", "", "");
+                }
+            }
+        }
+    }
 
     fun logUser(email: String, password: String, navController: NavHostController) {
         viewModelScope.launch {

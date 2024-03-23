@@ -30,6 +30,7 @@ fun HomeCoposable(
                     modifier = Modifier.fillMaxSize(),
                     //color = MaterialTheme.colors.background
                 ) {
+                    viewModel.getUserData()
                     if(viewModel.userUiState is Success) {
                         //TODO testwhitout if contract statest that user must be login to be able to reach HomeCoposable
                         mapViewModel.getBgSoil((viewModel.userUiState as Success).getTokken())

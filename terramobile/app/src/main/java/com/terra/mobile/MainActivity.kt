@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.terra.mobile.composable.HomeCoposable
 import com.terra.mobile.composable.LogInCoposable
+import com.terra.mobile.composable.ProfileCoposable
 import com.terra.mobile.composable.RegisterCoposable
 import com.terra.mobile.data.UserState
 import com.terra.mobile.view.model.MapsViewModel
@@ -101,6 +102,9 @@ class MainActivity : ComponentActivity() {
                             composable("home") {
                                 Log.w("SOIL", mapViewModel.state._soil.toString())
                                 HomeCoposable(userViewModel, mapViewModel, navController)
+                            }
+                            composable("profile") {
+                                ProfileCoposable(userViewModel, navController)
                             }
                         }
                     }
