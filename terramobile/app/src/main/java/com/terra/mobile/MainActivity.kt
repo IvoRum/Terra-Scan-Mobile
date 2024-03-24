@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
                                 HomeCoposable(userViewModel, mapViewModel, navController)
                             }
                             composable("profile") {
-                                ProfileCoposable(userViewModel, navController)
+                                ProfileCoposable(userViewModel)
                             }
                         }
                     }

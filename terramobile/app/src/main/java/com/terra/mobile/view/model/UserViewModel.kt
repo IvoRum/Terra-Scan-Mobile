@@ -41,7 +41,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
                 } else {
                     userModel("", "", "");
                 }
-                //Log.w("USERDATA", userData.value.email)
+                Log.w("USERDATA", userData.value.email)
             }
         }
     }
