@@ -4,13 +4,10 @@ import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.AuthenticationResponse
 import com.terra.mobile.model.RegistrationRequest
 import com.terra.mobile.model.SoilPointDTO
-import com.terra.mobile.model.SoilResponse
-import com.terra.mobile.model.UserModel
+import com.terra.mobile.model.userModel
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.HeaderMap
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 
@@ -31,7 +28,7 @@ interface Api {
 
     //User Apis
     @GET("user")
-    suspend fun getUserData(@Header("Authorization") token: String): UserModel
+    suspend fun getUserData(@Header("Authorization") token: String): userModel
 
     companion object {
         const val BASE_URL = "http://192.168.0.105:8081/"
