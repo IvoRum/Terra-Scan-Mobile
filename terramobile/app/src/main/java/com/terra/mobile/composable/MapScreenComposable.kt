@@ -7,61 +7,75 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.terra.mobile.data.UserState
 import com.terra.mobile.map.MapEvent
+import com.terra.mobile.model.SoilAriaRequest
 import com.terra.mobile.view.model.MapsViewModel
+import com.terra.mobile.view.model.UserViewModel
 
 
 @Composable
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MapScreen(
-    viewModel: MapsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    mapViewModel: MapsViewModel = viewModel(),
+    userModel: UserViewModel
 ) {
     val scaffoldState = remember { SnackbarHostState() }
     val uiSettings = remember {
         MapUiSettings(zoomControlsEnabled = false)
     }
+    val singapore = LatLng(42.7339, 25.4858)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(singapore, 4f)
+    }
+    mapViewModel.getBgSoil((userModel.userUiState as UserState.Success).getTokken())
     Scaffold(
         //scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                viewModel.onEvent(MapEvent.ToggleFalloutMap)
+                mapViewModel.onEvent(MapEvent.ToggleFalloutMap)
             }) {
                 Icon(
-                    imageVector = if (viewModel.state.isFalloutMap) {
+                    imageVector = if (mapViewModel.state.isFalloutMap) {
                         Icons.Default.ToggleOff
                     } else Icons.Default.ToggleOn,
                     contentDescription = "Toggle Fallout map"
                 )
+                Text(text = cameraPositionState.position.target.latitude.toString())
+                /*
+                val soilAria= remember {
+                    SoilAriaRequest(cameraPositionState.position.target.latitude,cameraPositionState.position.target.longitude,cameraPositionState.position.zoom as Double)
+                }
+                mapViewModel.getSoil((userModel.userUiState as UserState.Success).getTokken(),soilAria)
+
+                 */
             }
         }
     ) {
         //val singapore = LatLng(-23.684, 133.903)//Avstraliq
-        val singapore = LatLng(42.7339, 25.4858)
-        val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(singapore, 4f)
-        }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
-            properties = viewModel.state.properties,
+            properties = mapViewModel.state.properties,
             uiSettings = uiSettings,
             onMapLongClick = {
                 //TODO Think of what to a long click will do
-                viewModel.onEvent(MapEvent.OnMapLongClick(it))
+                mapViewModel.onEvent(MapEvent.OnMapLongClick(it))
             },
             cameraPositionState = cameraPositionState
         ) {
@@ -78,12 +92,13 @@ fun MapScreen(
             //googleMap.setOnPolylineClickListener(this)
             // googleMap.setOnPolygonClickListener(this)
             if (!cameraPositionState.isMoving) {
-                cameraPositionState.position.target
                 Polygon(points = polyline1)
-                var poligons = viewModel.state._soil
-                var bulgariaSoils = ArrayList<LatLng>()
-                poligons.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
-                Polygon(points = bulgariaSoils)
+                if(!mapViewModel.state._soil.isEmpty()) {
+                    var poligons = mapViewModel.state._soil
+                    var bulgariaSoils = ArrayList<LatLng>()
+                    poligons.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
+                    Polygon(points = bulgariaSoils)
+                }
             }
             /*
             viewModel.state.parkingSpots.forEach { spot ->

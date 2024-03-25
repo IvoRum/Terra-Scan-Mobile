@@ -32,10 +32,9 @@ fun HomeCoposable(
 
                     if(userModel.userUiState is Success) {
                         //TODO testwhitout if contract statest that user must be login to be able to reach HomeCoposable
-                        mapViewModel.getBgSoil((userModel.userUiState as Success).getTokken())
                         userModel.getUserData()
                     }
-                    MapScreen(mapViewModel)
+                    MapScreen(mapViewModel,userModel)
                 }
 
         }

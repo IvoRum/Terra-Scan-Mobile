@@ -137,7 +137,7 @@ fun LogInCoposable(viewModel: UserViewModel?, navController: NavHostController) 
                         if (viewModel != null) {
                             logInAction(
                                 viewModel,
-                                "ivoAdmin@mail.com",
+                                "ivoUser@mail.com",
                                 "12345678",
                                 navController
                             ) { progress ->
