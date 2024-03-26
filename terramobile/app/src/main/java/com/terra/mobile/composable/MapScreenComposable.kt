@@ -40,9 +40,9 @@ fun MapScreen(
     val uiSettings = remember {
         MapUiSettings(zoomControlsEnabled = false)
     }
-    val singapore = LatLng(-74.0060,40.7128)//БГ: 42.7339, 25.4858)
+    val singapore = LatLng(40.79,-73.18)//БГ: 42.7339, 25.4858)
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 4f)
+        position = CameraPosition.fromLatLngZoom(singapore, 8f)
     }
     //mapViewModel.getBgSoil((userModel.userUiState as UserState.Success).getTokken())
     Scaffold(
@@ -94,7 +94,7 @@ fun MapScreen(
                     var poligons = mapViewModel.state._soil
                     var bulgariaSoils = ArrayList<LatLng>()
                     var nySoil=ArrayList<ArrayList<LatLng>>()
-                    poligons.get(0).coordinates.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon))  }
+                    poligons.get(1).coordinates.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon))  }
                     //.forEach {cordinates->{} point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
 
                     poligons.forEach { soil-> soil.coordinates.forEach { point-> }}
