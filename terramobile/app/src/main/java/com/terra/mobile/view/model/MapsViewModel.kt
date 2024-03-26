@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class MapsViewModel constructor(private val soilRepository: SoilRepository) : ViewModel() {
 
-    var state by mutableStateOf(MapState(_soil = listOf(SoilPointDTO(42.7339, 25.4858))))
+    var state by mutableStateOf(MapState())
     var soilState by mutableStateOf(MapState(_soil = emptyList()))
 
     fun onEvent(event: MapEvent) {
@@ -55,7 +55,7 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
         viewModelScope.launch {
             var token="Bearer "+token
             Log.w("Token for aria soil",token)
-            soilState._soil = soilRepository.getSoil(token,request)
+            state._soil = soilRepository.getSoil(token,request)
         }
     }
 

@@ -40,11 +40,11 @@ fun MapScreen(
     val uiSettings = remember {
         MapUiSettings(zoomControlsEnabled = false)
     }
-    val singapore = LatLng(42.7339, 25.4858)
+    val singapore = LatLng(-74.0060,40.7128)//БГ: 42.7339, 25.4858)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(singapore, 4f)
     }
-    mapViewModel.getBgSoil((userModel.userUiState as UserState.Success).getTokken())
+    //mapViewModel.getBgSoil((userModel.userUiState as UserState.Success).getTokken())
     Scaffold(
         //scaffoldState = scaffoldState,
         floatingActionButton = {
@@ -88,42 +88,20 @@ fun MapScreen(
                 LatLng(-32.306, 149.248),
                 LatLng(-32.491, 147.309)
             )
-
-            //googleMap.setOnPolylineClickListener(this)
-            // googleMap.setOnPolygonClickListener(this)
             if (!cameraPositionState.isMoving) {
                 Polygon(points = polyline1)
                 if(!mapViewModel.state._soil.isEmpty()) {
                     var poligons = mapViewModel.state._soil
                     var bulgariaSoils = ArrayList<LatLng>()
-                    poligons.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
+                    var nySoil=ArrayList<ArrayList<LatLng>>()
+                    poligons.get(0).coordinates.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon))  }
+                    //.forEach {cordinates->{} point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
+
+                    poligons.forEach { soil-> soil.coordinates.forEach { point-> }}
+
                     Polygon(points = bulgariaSoils)
                 }
             }
-            /*
-            viewModel.state.parkingSpots.forEach { spot ->
-                Marker(
-                    position = LatLng(spot.lat, spot.lng),
-                    title = "Parking spot (${spot.lat}, ${spot.lng})",
-                    snippet = "Long click to delete",
-                    onInfoWindowLongClick = {
-                        /*
-                        viewModel.onEvent(
-                            MapEvent.OnInfoWindowLongClick(spot)
-                        )
-
-                         */
-                    },
-                    onClick = {
-                        it.showInfoWindow()
-                        true
-                    },
-                    icon = BitmapDescriptorFactory.defaultMarker(
-                        BitmapDescriptorFactory.HUE_GREEN
-                    )
-                )
-            }
-             */
         }
     }
 }

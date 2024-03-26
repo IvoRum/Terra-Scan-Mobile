@@ -8,7 +8,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.terra.mobile.data.UserState
 import com.terra.mobile.data.UserState.Success
+import com.terra.mobile.model.SoilAriaRequest
 import com.terra.mobile.ui.theme.TerramobileTheme
 import com.terra.mobile.view.model.MapsViewModel
 import com.terra.mobile.view.model.UserViewModel
@@ -33,6 +35,9 @@ fun HomeCoposable(
                     if(userModel.userUiState is Success) {
                         //TODO testwhitout if contract statest that user must be login to be able to reach HomeCoposable
                         userModel.getUserData()
+                        mapViewModel.getSoil((userModel.userUiState as UserState.Success).authResponse.access_token,
+                            SoilAriaRequest(-74.0060,40.7128,1.0)
+                        )
                     }
                     MapScreen(mapViewModel,userModel)
                 }
