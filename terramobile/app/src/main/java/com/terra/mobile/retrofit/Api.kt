@@ -3,6 +3,8 @@ package com.terra.mobile.retrofit
 import com.terra.mobile.model.AuthenticationRequest
 import com.terra.mobile.model.AuthenticationResponse
 import com.terra.mobile.model.RegistrationRequest
+import com.terra.mobile.model.SoilAriaRequest
+import com.terra.mobile.model.SoilDTO
 import com.terra.mobile.model.SoilPointDTO
 import com.terra.mobile.model.userModel
 import retrofit2.http.Body
@@ -24,7 +26,13 @@ interface Api {
 
     // Soil Apis
     @GET("soil")
-    suspend fun getTestSoil(@Header("Authorization") token: String): List<SoilPointDTO>
+    suspend fun getTestSoil(@Header("Authorization") token: String): List<SoilDTO>
+
+    @POST("soil")
+    suspend fun getSoil(
+        @Header("Authorization") token: String,
+        @Body request: SoilAriaRequest
+    ): List<SoilDTO>
 
     //User Apis
     @GET("user")

@@ -15,13 +15,16 @@ import com.terra.mobile.AppActivity
 import com.terra.mobile.map.MapEvent
 import com.terra.mobile.map.MapState
 import com.terra.mobile.map.MapStyle
+import com.terra.mobile.model.SoilAriaRequest
+import com.terra.mobile.model.SoilPointDTO
 import com.terra.mobile.retrofit.repository.SoilRepository
 import kotlinx.coroutines.launch
 
 
 class MapsViewModel constructor(private val soilRepository: SoilRepository) : ViewModel() {
 
-    var state by mutableStateOf(MapState(_soil = emptyList()))
+    var state by mutableStateOf(MapState())
+    var soilState by mutableStateOf(MapState(_soil = emptyList()))
 
     fun onEvent(event: MapEvent) {
         when (event) {
@@ -45,6 +48,14 @@ class MapsViewModel constructor(private val soilRepository: SoilRepository) : Vi
             var token="Bearer "+token
             Log.w("Token fo soil",token)
             state._soil = soilRepository.getTestSoil(token)
+        }
+    }
+
+    fun getSoil(token:String,request: SoilAriaRequest) {
+        viewModelScope.launch {
+            var token="Bearer "+token
+            Log.w("Token for aria soil",token)
+            state._soil = soilRepository.getSoil(token,request)
         }
     }
 
