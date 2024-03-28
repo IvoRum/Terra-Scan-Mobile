@@ -36,7 +36,7 @@ fun HomeCoposable(
                         //TODO testwhitout if contract statest that user must be login to be able to reach HomeCoposable
                         userModel.getUserData()
                         mapViewModel.getSoil((userModel.userUiState as UserState.Success).authResponse.access_token,
-                            SoilAriaRequest(-74.0060,40.7128,1.0)
+                            SoilAriaRequest(-74.0060,40.7128,2.0)
                         )
                     }
                     MapScreen(mapViewModel,userModel)
