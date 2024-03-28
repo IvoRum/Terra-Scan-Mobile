@@ -2,6 +2,7 @@ package com.terra.mobile.composable
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -15,12 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Polygon
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.terra.mobile.data.UserState
 import com.terra.mobile.map.MapEvent
@@ -28,6 +31,8 @@ import com.terra.mobile.model.SoilAriaRequest
 import com.terra.mobile.view.model.MapsViewModel
 import com.terra.mobile.view.model.UserViewModel
 
+val mapfill: Color = Color(245, 189, 133, 136)
+val mapLine: Color = Color(0, 0, 0, 89)
 
 @Composable
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -83,23 +88,21 @@ fun MapScreen(
             val polyline1 = listOf(
                 LatLng(-35.016, 143.321),
                 LatLng(-34.747, 145.592),
-                LatLng(-34.364, 147.891),
-                LatLng(-33.501, 150.217),
-                LatLng(-32.306, 149.248),
-                LatLng(-32.491, 147.309)
+                LatLng(-34.364, 147.891)
             )
             if (!cameraPositionState.isMoving) {
                 Polygon(points = polyline1)
                 if(!mapViewModel.state._soil.isEmpty()) {
                     var poligons = mapViewModel.state._soil
-                    var bulgariaSoils = ArrayList<LatLng>()
-                    var nySoil=ArrayList<ArrayList<LatLng>>()
-                    poligons.get(1).coordinates.forEach { point -> bulgariaSoils.add(LatLng(point.lat, point.lon))  }
-                    //.forEach {cordinates->{} point -> bulgariaSoils.add(LatLng(point.lat, point.lon)) }
+                    val listOfListOfLatLng: List<List<LatLng>> = poligons.map { soilDTO ->
+                        soilDTO.coordinates.map { polygonPoint ->
+                            LatLng(polygonPoint.lat, polygonPoint.lon)
 
-                    poligons.forEach { soil-> soil.coordinates.forEach { point-> }}
-
-                    Polygon(points = bulgariaSoils)
+                        }
+                    }
+                    Log.w("Polygons",listOfListOfLatLng.toString())
+                    //Polyline(testSoil)
+                    listOfListOfLatLng.forEach { poligon->  Polygon(points = poligon, fillColor = mapfill, strokeColor = mapLine)}
                 }
             }
         }
